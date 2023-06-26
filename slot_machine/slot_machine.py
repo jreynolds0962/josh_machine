@@ -10,14 +10,16 @@
 
 
 #1.
-import random, sys
+import random
 from time import sleep
 
 slots = ["DING", "7", "JOKER"]
 
 
+playing = True
+
 #2
-while True:
+while playing:
     print("Welcome to the slots!")
 
     health = 100
@@ -26,7 +28,8 @@ while True:
     while True:
         ready = input("Are you ready to play the slots?: (y/n) ")
         if ready.lower() == 'n' or ready.lower() == 'no':
-            sys.exit()
+            playing = False
+            break
         elif ready.lower() == 'yes' or ready.lower() == 'y':
             print("Let's play!")
             break
@@ -37,10 +40,11 @@ while True:
             print("something went wrong")
             continue
 
-    while True:
+    while playing:
 
         if health == 0:
             print("GAME OVER")
+            playing = False
             break
 
         print("""Rules:  
@@ -50,12 +54,13 @@ while True:
         answer = int(input("how much do you want to bet?: (0 to quit) "))
 
         if answer == 0:
-            sys.exit()
+            playing = False
+            break
         elif answer > health or answer < 0:
             print("This amount is not valid, please put an amount greater than 0 and less than your health:", health)
             continue
         else:
-            print(f"You bet {answer} points of health")
+            print(f"You bet {answer} health points")
 
             health -= answer
             spin1 = random.choice(slots)
@@ -78,3 +83,5 @@ while True:
                     sleep(1.5)
                     break
 
+
+print("Thank you for playing the Josh Machine! Goodbye!")
